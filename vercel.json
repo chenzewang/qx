@@ -1,8 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "echo 'Static website, no build needed'",
+  "outputDirectory": ".",
+  "installCommand": "echo 'No dependencies to install'",
   "headers": [
     {
-      "source": "/(.*\\.(js|css|gif|png|jpg|jpeg|svg|ico))",
+      "source": "/(.*)\\.(js|css|gif|png|jpg|jpeg|svg|ico)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -11,7 +14,7 @@
       ]
     },
     {
-      "source": "/(.*\\.html)",
+      "source": "/(.*)\\.(html)",
       "headers": [
         {
           "key": "Cache-Control",
