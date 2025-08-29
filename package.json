@@ -1,0 +1,32 @@
+{
+  "name": "qixi-dog-love-game",
+  "version": "1.0.0",
+  "description": "🐕 小狗牵红线 💕 - 七夕特别版情侣小游戏",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "npx serve .",
+    "build": "echo 'This is a static website, no build process needed'",
+    "deploy": "echo 'Please push to GitHub and enable GitHub Pages'"
+  },
+  "keywords": [
+    "game",
+    "love",
+    "qixi",
+    "valentine",
+    "canvas",
+    "javascript",
+    "romantic",
+    "dogs"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/qx.git"
+  },
+  "homepage": "https://your-username.github.io/qx/",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小狗牵红线 - 七夕浪漫游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-content">
+        <!-- 游戏标题 -->
+        <header class="game-header">
+            <h1>🐕 小狗牵红线 💕</h1>
+        </header>
+
+        <!-- 游戏主画布 -->
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            
+            <!-- 线条小狗GIF -->
+            <div class="dog-container" id="dogContainer">
+                <img class="line-dog" id="lineDog" src="gif/61c2f298f86f4881be0aae9dd28994bc.gif" alt="可爱的线条小狗" width="80" height="80">
+            </div>
+        </div>
+
+        <!-- 剧情展示区域 -->
+        <div class="story-panel" id="storyPanel">
+            <div class="story-content">
+                <div class="story-dog-avatar">
+                    <img id="storyDogImage" src="gif/61c2f298f86f4881be0aae9dd28994bc.gif" alt="小狗头像" width="60" height="60">
+                </div>
+                <div class="story-text" id="storyText">
+                    小白今天格外兴奋，因为它要帮助一对恋人画出他们的第一颗爱心！小白摇着尾巴说：'汪汪！爱心要画得圆润一点哦，就像我看到主人时开心的心情一样！'
+                </div>
+            </div>
+            <div class="story-actions">
+                <button id="startChallengeBtn" class="game-btn primary story-btn">
+                    🎮 开始挑战
+                </button>
+                <button id="skipStoryBtn" class="game-btn secondary story-btn">
+                    ⏭️ 跳过剧情
+                </button>
+            </div>
+        </div>
+
+        <!-- 游戏控制面板 -->
+        <div class="control-panel">
+            <div class="level-info">
+                <span class="level-text">关卡 <span id="currentLevel">1</span></span>
+                <span class="level-title" id="levelTitle">画一个爱心 💖</span>
+            </div>
+            
+            <div class="game-buttons">
+                <button id="startBtn" class="game-btn primary">开始游戏</button>
+                <button id="clearBtn" class="game-btn secondary">清除轨迹</button>
+                <button id="hintBtn" class="game-btn secondary">提示</button>
+            </div>
+        </div>
+
+        <!-- 回忆展示模态框 -->
+        <div class="memory-modal" id="memoryModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="memoryTitle">美好回忆</h3>
+                    <button class="close-btn" id="closeModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="memory-image" id="memoryImage">
+                        <div class="placeholder-heart">💕</div>
+                    </div>
+                    <p class="memory-text" id="memoryText">这里是你们的甜蜜回忆...</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="game-btn primary" id="nextLevelBtn">下一关</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏说明 -->
+        <div class="instructions">
+            <p>💡 用鼠标或手指控制小狗跑动，连接星星画出指定图案</p>
+        </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,873 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100vw;
+}
+
+/* 游戏容器 */
+.game-container {
+    width: 100vw;
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+/* 游戏内容 */
+.game-content {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* 游戏标题 */
+.game-header {
+    margin-bottom: 20px;
+    color: white;
+}
+
+.game-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+@keyframes titleGlow {
+    from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    to { text-shadow: 2px 2px 20px rgba(255,255,255,0.5); }
+}
+
+/* Canvas容器 */
+.canvas-container {
+    position: relative;
+    display: inline-block;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+    flex-shrink: 0;
+    max-width: calc(100vw - 40px);
+    width: auto;
+    box-sizing: border-box;
+}
+
+#gameCanvas {
+    display: block;
+    background: radial-gradient(circle at center, #0f1419 0%, #1a1a2e 50%, #16213e 100%);
+    cursor: crosshair;
+    width: auto;
+    height: auto;
+    max-width: min(800px, calc(100vw - 40px));
+    max-height: 600px;
+    box-sizing: border-box;
+}
+
+/* 线条小狗容器 */
+.dog-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.line-dog {
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+    transition: all 0.3s ease;
+}
+
+/* 小狗动画 */
+.dog-running {
+    animation: dogRun 0.4s ease-in-out infinite;
+}
+
+.dog-happy {
+    animation: dogHappy 1.5s ease-in-out;
+}
+
+.dog-excited {
+    animation: dogExcited 0.6s ease-in-out infinite;
+}
+
+@keyframes dogRun {
+    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+    25% { transform: translateY(-2px) rotate(1deg) scale(1.02); }
+    50% { transform: translateY(-4px) rotate(0deg) scale(1.05); }
+    75% { transform: translateY(-2px) rotate(-1deg) scale(1.02); }
+}
+
+@keyframes dogHappy {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    15% { transform: scale(1.15) rotate(-8deg); }
+    30% { transform: scale(1.1) rotate(5deg); }
+    45% { transform: scale(1.15) rotate(-5deg); }
+    60% { transform: scale(1.1) rotate(8deg); }
+    75% { transform: scale(1.15) rotate(-3deg); }
+    90% { transform: scale(1.05) rotate(2deg); }
+}
+
+@keyframes dogExcited {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+}
+
+/* 尾巴摇摆动画 */
+#dogTail {
+    transform-origin: 58px 45px;
+    animation: tailWag 0.6s ease-in-out infinite;
+}
+
+@keyframes tailWag {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(20deg); }
+    75% { transform: rotate(-10deg); }
+}
+
+/* 小狗跑步时的腿部动画 */
+.dog-running #dogTail {
+    animation: tailWagFast 0.3s ease-in-out infinite;
+}
+
+@keyframes tailWagFast {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(25deg); }
+}
+
+/* 小狗开心时的特殊效果 */
+.dog-happy #dogTail {
+    animation: tailWagHappy 0.2s ease-in-out infinite;
+}
+
+@keyframes tailWagHappy {
+    0%, 100% { transform: rotate(10deg); }
+    50% { transform: rotate(35deg); }
+}
+
+/* 剧情面板 */
+.story-panel {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    animation: storyFadeIn 1s ease-in-out;
+}
+
+.story-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.story-dog-avatar {
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.4);
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    animation: avatarBounce 2s ease-in-out infinite;
+}
+
+.story-dog-avatar img {
+    display: block;
+    border-radius: 50%;
+}
+
+.story-text {
+    color: white;
+    font-size: 1rem;
+    line-height: 1.5;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #ff69b4;
+    position: relative;
+    animation: textTypewriter 2s ease-in-out;
+}
+
+.story-text::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 10px solid rgba(255,255,255,0.1);
+}
+
+@keyframes storyFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes avatarBounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes textTypewriter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 剧情操作按钮 */
+.story-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.story-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    min-width: 120px;
+    animation: buttonPulse 2s ease-in-out infinite;
+}
+
+.story-btn.primary {
+    animation-delay: 0.5s;
+}
+
+@keyframes buttonPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* 控制面板 */
+.control-panel {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.level-info {
+    margin-bottom: 15px;
+    color: white;
+}
+
+.level-text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.level-title {
+    font-size: 1.3rem;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* 游戏按钮 */
+.game-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.game-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.game-btn.primary {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+}
+
+.game-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,107,107,0.6);
+}
+
+.game-btn.secondary {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    color: white;
+    box-shadow: 0 4px 15px rgba(78,205,196,0.4);
+}
+
+.game-btn.secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78,205,196,0.6);
+}
+
+.game-btn:active {
+    transform: translateY(0px);
+}
+
+/* 回忆模态框 */
+.memory-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    color: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    animation: modalSlideIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+    from { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 15px;
+}
+
+.modal-header h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.modal-body {
+    margin-bottom: 25px;
+}
+
+.memory-image {
+    width: 100%;
+    height: 200px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border: 2px dashed rgba(255,255,255,0.3);
+}
+
+.placeholder-heart {
+    font-size: 4rem;
+    opacity: 0.7;
+}
+
+.memory-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: center;
+    font-style: italic;
+}
+
+.memory-main-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.memory-quote {
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+}
+
+.memory-personalized {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.memory-personalized small {
+    display: block;
+    line-height: 1.4;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+/* 游戏说明 */
+.instructions {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+    margin-top: 15px;
+}
+
+/* 低高度屏幕优化 */
+@media (max-height: 700px) {
+    body {
+        align-items: flex-start;
+        padding: 10px 0;
+    }
+    
+    .game-container {
+        min-height: auto;
+        padding: 10px;
+    }
+    
+    .game-header {
+        margin-bottom: 10px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+    
+    .canvas-container {
+        margin-bottom: 10px;
+    }
+    
+    #gameCanvas {
+        max-height: 250px;
+    }
+    
+    .story-panel {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .story-text {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .game-buttons {
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .game-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .level-info {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-height: 600px) {
+    .game-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    #gameCanvas {
+        max-height: 200px;
+    }
+    
+    .story-panel {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+    
+    .story-content {
+        gap: 8px;
+    }
+    
+    .story-dog-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .story-text {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+    
+    .game-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .game-btn {
+        padding: 15px 25px;
+        font-size: 1.1rem;
+        min-height: 48px; /* 触摸友好的最小尺寸 */
+    }
+    
+    #gameCanvas {
+        touch-action: none; /* 防止滚动干扰绘制 */
+    }
+    
+    .instructions {
+        font-size: 1rem;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+}
+
+/* 大屏设备 */
+@media (min-width: 1025px) {
+    .game-content {
+        max-width: 1200px;
+        padding: 30px;
+    }
+    
+    #gameCanvas {
+        max-width: 800px;
+        max-height: 600px;
+    }
+}
+
+/* 平板设备 */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .game-content {
+        max-width: 900px;
+        padding: 20px;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        height: auto;
+        max-width: 600px;
+        max-height: 450px;
+    }
+    
+    .control-panel {
+        padding: 25px;
+    }
+}
+
+/* 手机横屏 */
+@media (max-width: 768px) and (orientation: landscape) {
+    body {
+        overflow-x: auto;
+    }
+    
+    .game-content {
+        padding: 5px;
+        max-width: none;
+    }
+    
+    .game-header {
+        margin-bottom: 10px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    #gameCanvas {
+        max-width: 500px;
+        max-height: 250px;
+    }
+    
+    .control-panel {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .instructions {
+        margin-top: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* 手机竖屏 */
+@media (max-width: 768px) and (orientation: portrait) {
+    .game-content {
+        padding: 10px;
+    }
+    
+    .game-header h1 {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        height: auto;
+        max-width: 350px;
+        max-height: 280px;
+    }
+    
+    .canvas-container {
+        margin-bottom: 15px;
+    }
+    
+    .story-panel {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .story-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .story-dog-avatar {
+        align-self: center;
+    }
+    
+    .story-text {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+    
+    .story-text::before {
+        display: none;
+    }
+    
+    .story-actions {
+        margin-top: 15px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .story-btn {
+        width: 200px;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    .game-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .game-btn {
+        width: 250px;
+        padding: 12px 20px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .level-info {
+        margin-bottom: 10px;
+    }
+    
+    .level-text {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .level-title {
+        font-size: 1rem;
+        display: block;
+    }
+}
+
+/* 小屏手机 */
+@media (max-width: 480px) {
+    .game-header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    #gameCanvas {
+        max-width: 300px;
+        max-height: 240px;
+    }
+    
+    .level-title {
+        font-size: 0.9rem;
+    }
+    
+    .game-btn {
+        width: 220px;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .control-panel {
+        padding: 15px;
+    }
+    
+    .modal-content {
+        padding: 15px;
+    }
+    
+    .memory-main-text {
+        font-size: 1rem;
+    }
+    
+    .memory-quote {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .instructions {
+        font-size: 0.8rem;
+    }
+}
+
+/* 超小屏设备 */
+@media (max-width: 360px) {
+    .game-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    #gameCanvas {
+        max-width: 280px;
+        max-height: 210px;
+    }
+    
+    .game-btn {
+        width: 200px;
+        font-size: 0.8rem;
+    }
+    
+    .level-title {
+        font-size: 0.8rem;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .line-dog {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    #gameCanvas {
+        image-rendering: pixelated;
+    }
+}
+
+/* 粒子效果容器 */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* 轨迹发光效果 */
+.trail-glow {
+    filter: drop-shadow(0 0 5px #ff69b4) drop-shadow(0 0 10px #ff69b4) drop-shadow(0 0 15px #ff69b4);
+}
