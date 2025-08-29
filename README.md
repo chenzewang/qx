@@ -16,7 +16,7 @@
 
 ## 🚀 在线体验
 
-[点击这里开始游戏](https://your-username.github.io/qx/)
+[点击这里开始游戏](https://chenzewang.github.io/qx/)
 
 ## 📁 项目结构
 
@@ -36,7 +36,7 @@ qx/
 
 1. 克隆项目到本地
 ```bash
-git clone https://github.com/your-username/qx.git
+git clone https://github.com/chenzewang/qx.git
 cd qx
 ```
 
